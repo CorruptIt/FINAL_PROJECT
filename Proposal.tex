@@ -1,0 +1,117 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{booktabs}
+
+\setstretch{1.05}
+
+\title{\textbf{A Machine Learning Approach to Modeling Market Value}}
+\author{
+\textbf{Name:} Ryan Barton \quad \textbf{NetID:} \texttt{rmb298} \\
+\textbf{Team:} Solo
+}
+\date{}
+
+\begin{document}
+\maketitle
+
+%=========================================================
+\section*{Title and Team Information}
+\begin{itemize}[leftmargin=2.25em]
+  \item \textbf{Project Title:} A Machine Learning Approach to Modeling Market Value
+  \item \textbf{Team Members (Name, NetID):} Ryan Barton (\texttt{rmb298})
+\end{itemize}
+
+%=========================================================
+\section*{Research Question and Motivation}
+\begin{description}[leftmargin=2.25em]
+\item[\textbf{Research Question:}]
+Can a ML model predict the fair market valuation of a company from their past performance, and macroeconomic factors?
+\item[\textbf{Motivation:}]
+Market capitalization is an indicator of a company's financial well‑being.  
+Being able to predict this number will give insight into the factors that drive it.
+Utilizing open‑source APIs to gather macroeconomic and foundational conditions, I will be able to evaluate how closely these features correlate with market capitalization. 
+By using data‑science and machine learning techniques paired with a relational database, I will be able to effectively create a pipeline to compare predicted market capitalization to actual market capitalization.
+\end{description}
+%=========================================================
+\section*{Data Sources}
+
+\noindent\textbf{Planned Data:}
+\begin{itemize}[leftmargin=2.25em]
+  \item \textbf{Scope:} Top 100 U.S. public companies by market capitalization 2016-2025.
+  \item \textbf{Daily Market Data:} Price and volume (OHLCV) for each company. This will be used to calculate momentum/volatility.
+  \item \textbf{Quarterly Market Data:} Revenue, net income, assets, liabilities, shares outstanding. Used to create monthly snapshots
+  \item \textbf{Macroeconomic Data:} Unemployement rate, Federal Funds Rate, CPI inflation (YoY). Used for correlation of monthly snapshots
+\end{itemize}
+
+\noindent\textbf{How the data will be obtained:}\\
+This Data will be obtained through multiple API's. This list will be subject to change if need be for the requirements of this project.
+\begin{itemize}[leftmargin=2.25em]
+  \item \textbf{Alpha Vantage:} Daily Market Data, Quarterly Market Data.
+  \item \textbf{FRED:} Macroeconomic Data.
+  \item \textbf{100 Companies:} https://companiesmarketcap.com/usa/largest-companies-in-the-usa-by-market-cap/ will be website used to scrape 100 companies for analysis.
+\end{itemize}
+
+
+\noindent\textbf{Cleaning and preprocessing plan:}
+\begin{itemize}[leftmargin=2.25em]
+  \item \textbf{Normalizing Identifiers:} Ticker symbols are consistent and only map to one company.
+  \item \textbf{Fix Types and Dates:} Consistent formats for dates, and cast numeric data to numeric types to save space.
+  \item \textbf{Handle insufficent Data:} Handle NaN type, drop columns or rows if necessary. Understand the missing data and how it may skew results.
+  \item \textbf{Build Snapshots of Data:} Use as-of methodology to only use data up to monthly snapshot to avoid dishonest predictions.
+\end{itemize}
+
+
+\noindent\textbf{Potential challenges.}
+\begin{itemize}[leftmargin=1.25em]
+   \item (Fill in)
+\end{itemize}
+
+%=========================================================
+\section*{Methodology and Analysis Plan}
+
+\noindent\textbf{Database design (SQL / data management).}\\
+% (Fill in)
+
+\vspace{0.5em}
+\noindent\textbf{Feature engineering.}\\
+% (Fill in)
+
+\vspace{0.5em}
+\noindent\textbf{Models.}\\
+% (Fill in)
+
+\vspace{0.5em}
+\noindent\textbf{Evaluation protocol (time-series aware).}\\
+% (Fill in)
+
+\vspace{0.5em}
+\noindent\textbf{Tools/libraries:}\\
+% (Fill in)
+
+%=========================================================
+\section*{Expected Outcomes and Evaluation}
+
+\noindent\textbf{Expected outcomes.}\\
+% (Fill in)
+
+\vspace{0.5em}
+\noindent\textbf{Evaluation metrics.}\\
+% (Fill in)
+
+\vspace{0.5em}
+\noindent\textbf{Optional extension evaluation.}\\
+% (Fill in)
+
+\vspace{0.5em}
+\noindent\textbf{Broader implications.}\\
+% (Fill in)
+
+\vspace{0.75em}
+\noindent\textbf{References (to be completed).}\\
+% (Fill in)
+
+\end{document}
