@@ -33,17 +33,17 @@ Can a ML model predict the fair market valuation of a company from their past pe
 \item[\textbf{Motivation:}]
 Market capitalization is an indicator of a company's financial well‑being.  
 Being able to predict this number will give insight into the factors that drive it.
-Utilizing open‑source APIs to gather macroeconomic and foundational conditions, I will be able to evaluate how closely these features correlate with market capitalization. 
-By using data‑science and machine learning techniques paired with a relational database, I will be able to effectively create a pipeline to compare predicted market capitalization to actual market capitalization.
+Utilizing open‑source APIs to gather macroeconomic and foundational conditions, we will be able to evaluate how closely these features correlate with market capitalization. 
+By using data‑science and machine learning techniques paired with a relational database, we will be able to effectively create a pipeline to compare predicted market capitalization to actual market capitalization.
 \end{description}
 %=========================================================
 \section*{Data Sources}
 
 \noindent\textbf{Planned Data:}
 \begin{itemize}[leftmargin=2.25em]
-  \item \textbf{Scope:} Top 100 U.S. public companies by market capitalization 2016-2025.
+  \item \textbf{Scope:} Top 100 U.S. public companies by market capitalization 2015-2020.
   \item \textbf{Daily Market Data:} Price and volume (OHLCV) for each company. This will be used to calculate momentum/volatility.
-  \item \textbf{Quarterly Market Data:} Revenue, net income, assets, liabilities, shares outstanding. Used to create monthly snapshots
+  \item \textbf{Quarterly Market Data:} Revenue, net income, assets, liabilities, shares outstanding. Used to create quarterly snapshots
   \item \textbf{Macroeconomic Data:} Unemployement rate, Federal Funds Rate, CPI inflation (YoY). Used for correlation of monthly snapshots
 \end{itemize}
 
@@ -61,13 +61,14 @@ This Data will be obtained through multiple API's. This list will be subject to 
   \item \textbf{Normalizing Identifiers:} Ticker symbols are consistent and only map to one company.
   \item \textbf{Fix Types and Dates:} Consistent formats for dates, and cast numeric data to numeric types to save space.
   \item \textbf{Handle insufficent Data:} Handle NaN type, drop columns or rows if necessary. Understand the missing data and how it may skew results.
-  \item \textbf{Build Snapshots of Data:} Use as-of methodology to only use data up to monthly snapshot to avoid dishonest predictions.
+  \item \textbf{Build Snapshots of Data:} Use as-of methodology to only use data up to quarterly snapshot to avoid dishonest predictions.
 \end{itemize}
 
 
-\noindent\textbf{Potential challenges.}
-\begin{itemize}[leftmargin=1.25em]
-   \item (Fill in)
+\noindent\textbf{Potential challenges:}
+\begin{itemize}[leftmargin=2.25em]
+   \item \textbf{API limits:} Rate limits, and possible missing data will hinder process. May have to narrow scope if need be.
+   \item \textbf{Building as-of Snapshots:} This is a complex step that requires understanding the data inorder to prevent ahead of time bias.
 \end{itemize}
 
 %=========================================================
