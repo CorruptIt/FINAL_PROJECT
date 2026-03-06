@@ -5,6 +5,7 @@
 \usepackage{enumitem}
 \usepackage{amsmath}
 \usepackage{booktabs}
+\usepackage{multicol}
 
 \setstretch{1.05}
 
@@ -17,13 +18,6 @@
 
 \begin{document}
 \maketitle
-
-%=========================================================
-\section*{Title and Team Information}
-\begin{itemize}[leftmargin=2.25em]
-  \item \textbf{Project Title:} A Machine Learning Approach to Modeling Market Value
-  \item \textbf{Team Members (Name, NetID):} Ryan Barton (\texttt{rmb298})
-\end{itemize}
 
 %=========================================================
 \section*{Research Question and Motivation}
@@ -41,7 +35,7 @@ By using data‑science and machine learning techniques paired with a relational
 
 \noindent\textbf{Planned Data:}
 \begin{itemize}[leftmargin=2.25em]
-  \item \textbf{Scope:} Top 100 U.S. public companies by market capitalization 2015-2020.
+  \item \textbf{Scope:} Current 100 U.S. public companies by market capitalization.
   \item \textbf{Daily Market Data:} Price and volume (OHLCV) for each company. This will be used to calculate momentum/volatility.
   \item \textbf{Quarterly Market Data:} Revenue, net income, assets, liabilities, shares outstanding. Used to create quarterly snapshots
   \item \textbf{Macroeconomic Data:} Unemployement rate, Federal Funds Rate, CPI inflation (YoY). Used for correlation of monthly snapshots
@@ -50,9 +44,9 @@ By using data‑science and machine learning techniques paired with a relational
 \noindent\textbf{How the data will be obtained:}\\
 This Data will be obtained through multiple API's. This list will be subject to change if need be for the requirements of this project.
 \begin{itemize}[leftmargin=2.25em]
-  \item \textbf{Alpha Vantage:} Daily Market Data, Quarterly Market Data.
-  \item \textbf{FRED:} Macroeconomic Data.
-  \item \textbf{100 Companies:} https://companiesmarketcap.com/usa/largest-companies-in-the-usa-by-market-cap/ will be website used to scrape 100 companies for analysis.
+  \item \textbf{Alpha Vantage(API) OR Yahoo Finance(API):} Daily Market Data, Quarterly Market Data.
+  \item \textbf{FRED(API):} Macroeconomic Data.
+  \item \textbf{100 Companies(Website):} https://companiesmarketcap.com/usa/largest-companies-in-the-usa-by-market-cap/ will be website used to scrape 100 companies for analysis.
 \end{itemize}
 
 
@@ -74,45 +68,71 @@ This Data will be obtained through multiple API's. This list will be subject to 
 %=========================================================
 \section*{Methodology and Analysis Plan}
 
-\noindent\textbf{Database design (SQL / data management).}\\
-% (Fill in)
+\noindent\textbf{Database design (SQL / data management):}\\
+\begin{table}[h]
+\centering
+\caption{SQL Database Schema for Market Valuation Model}
+\label{tab:database_schema}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Table} & \textbf{Primary Key} & \textbf{Foreign Key} & \textbf{Key Columns} \\ \midrule
+\textbf{Companies} & \texttt{ticker} & -- & \texttt{sector}, \texttt{industry\_group} \\
+\textbf{Daily\_Prices} & \texttt{(ticker, date)} & \texttt{ticker} & \texttt{close}, \texttt{volume}, \texttt{hl\_pct\_change} \\
+\textbf{Fundamentals} & \texttt{(ticker, report\_date)} & \texttt{ticker} & \texttt{net\_income}, \texttt{total\_assets}, \texttt{shares\_out} \\
+\textbf{Macro} & \texttt{date} & -- & \texttt{unemployment\_rate}, \texttt{cpi\_yoy}, \texttt{fed\_rate} \\ \bottomrule
+\end{tabular}
+\end{table}
 
-\vspace{0.5em}
-\noindent\textbf{Feature engineering.}\\
-% (Fill in)
 
-\vspace{0.5em}
-\noindent\textbf{Models.}\\
-% (Fill in)
+\noindent\textbf{Feature engineering:}\\
+\begin{itemize}
+  \item \textbf{P/E ratio:} Price to Earnings ratio computed with daily market values
+  \item \textbf{Debt-to-equity:} Can be calculated by quarterly foundamental data.
+  \item \textbf{Momentum and Volatility Features:}  utilizing the daily market values we can calculate the standard deviation and the volatility of a stock.
+  \item \textbf{Macro Economic Features:}  Determine how the enviroment, i.e. inflation correlates to the market capitalization of a company.
+\end{itemize}
 
-\vspace{0.5em}
-\noindent\textbf{Evaluation protocol (time-series aware).}\\
-% (Fill in)
+\noindent\textbf{Models:}\\
+\begin{itemize}
+  \item \textbf{Gradient Boosting Machine:} This is the most practical, as it does not require signficant compute power, so we will start with this type of model.
+  \item \textbf{Long Short-Term Memory:} This is the less practical option but does offer great insight to some factors such as identifying historical patterns that will affect a company negatively.
+  \item \textbf{Plan:} Start with GBM which requires detailed feature engineering, but can handle noiser data. If time permits move into LSTM for market volatility and trends. (7)
+\end{itemize}
 
-\vspace{0.5em}
 \noindent\textbf{Tools/libraries:}\\
-% (Fill in)
+\begin{itemize}
+\begin{multicols}{4}
+  \item pandas
+  \item numpy
+  \item sqlite3
+  \item xgboost
+  \item yfinance
+  \item fredapi
+  \item alpha\_vantage
+  \item pytorch
+\end{multicols}
+\end{itemize}
 
 %=========================================================
-\section*{Expected Outcomes and Evaluation}
+\section*{Expected:}
+The market is notoriously hard to predict. This means that for this project, we will in no way try to achieve 100\% accuracy. 
+Instead we will try to strive for a statistically signficant accuracy of 55\%. This shouldn't be unobtainable because the top 100 companies 
+are more stable. With these predictions we will be able to see how macroeconmics affect companies values and how hard it is to predict the enviroment. 
+For instance, our model will most likely not be able to predict the market crash from COVID-19. However, we do believe that combining macroeconomic and Fundamentals
+will increase accuracy of predictions and is a better approach than observing just price history alone. (7)
+\section*{Resources:}
+\begin{enumerate}
+\begin{multicols}{2}
+  \item https://fred.stlouisfed.org/
+  \item https://www.alphavantage.co
+  \item https://pypi.org/project/yfinance/
+  \item https://finance.yahoo.com/
+  \item https://pandas.pydata.org/
+  \item https://pytorch.org/
+  \item https://arxiv.org/html/2505.23084v1
+  
+\end{multicols}
+\end{enumerate}
 
-\noindent\textbf{Expected outcomes.}\\
-% (Fill in)
-
-\vspace{0.5em}
-\noindent\textbf{Evaluation metrics.}\\
-% (Fill in)
-
-\vspace{0.5em}
-\noindent\textbf{Optional extension evaluation.}\\
-% (Fill in)
-
-\vspace{0.5em}
-\noindent\textbf{Broader implications.}\\
-% (Fill in)
-
-\vspace{0.75em}
-\noindent\textbf{References (to be completed).}\\
-% (Fill in)
 
 \end{document}
