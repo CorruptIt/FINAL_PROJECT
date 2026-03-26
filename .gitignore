@@ -6,3 +6,17 @@
 *.out
 *.pdf
 *.synctex.gz
+
+#Environments
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.pyc
+
+#DB
+data/market_data.db
+
+# System files
+.DS_Store
