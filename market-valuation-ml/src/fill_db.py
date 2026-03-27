@@ -7,6 +7,9 @@ import time
 
 
 def populate_companies_table(limit=100):
+    """
+    Pull information from yahoo finance from the top 100 companies found in the top_100_usa_companies.csv
+    """
     conn = sqlite3.connect(config.DB_PATH)
     cursor = conn.cursor()
 
@@ -49,6 +52,9 @@ def populate_companies_table(limit=100):
 
 
 def audit_companies():
+    """
+    Check if there any missing data in the information commited to the data base from populate_companies_table
+    """
     conn = sqlite3.connect(config.DB_PATH)
     query = """
         SELECT ticker, name FROM Companies 
