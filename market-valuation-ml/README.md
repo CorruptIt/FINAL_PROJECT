@@ -11,4 +11,4 @@
 
 ### Scraping Logic
 
-- [Top 100 companies](https://companiesmarketcap.com/usa/largest-companies-in-the-usa-by-market-cap/)
+- [Top 100 companies](https://companiesmarketcap.com/usa/largest-companies-in-the-usa-by-market-cap/) Gather view requests library then start filling the database table.

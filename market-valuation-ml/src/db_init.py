@@ -18,6 +18,7 @@ def initialize_db():
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS Companies (
                 ticker TEXT PRIMARY KEY,
+                name TEXT,
                 sector TEXT,
                 industry_group TEXT
             )
