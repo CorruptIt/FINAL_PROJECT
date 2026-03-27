@@ -1,9 +1,9 @@
+import config
 import sqlite3
 import sys
 from pathlib import Path
 
 sys.path.append(str(Path(__file__).resolve().parent.parent))
-import config
 
 """Setting up the data base to the schema explain in the proposal"""
 
@@ -14,6 +14,7 @@ def initialize_db():
     with sqlite3.connect(config.DB_PATH) as conn:
         cursor = conn.cursor()
 
+        # Company table
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS Companies (
                 ticker TEXT PRIMARY KEY,
@@ -22,6 +23,7 @@ def initialize_db():
             )
         """)
 
+        # Daily_Prices table
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS Daily_Prices (
                 ticker TEXT,
@@ -34,6 +36,7 @@ def initialize_db():
             )
         """)
 
+        # Fundamentals table
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS Fundamentals (
                 ticker TEXT,
@@ -46,6 +49,7 @@ def initialize_db():
             )
         """)
 
+        # Macro table
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS Macro (
                 date TEXT PRIMARY KEY,
