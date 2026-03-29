@@ -9,6 +9,9 @@ SRC_DIR = os.path.join(BASE_DIR, "src")
 # Paths
 DB_PATH = os.path.join(DATA_DIR, "market_data.db")
 RAW_PATH = os.path.join(DATA_DIR, "raw")
+DAILY_PATH = os.path.join(RAW_PATH, "daily")
+FUNDAMENTALS_PATH = os.path.join(RAW_PATH, "fundamentals")
+MACRO_PATH = os.path.join(RAW_PATH, "macro")
 
 # Urls
 URLS = {
@@ -21,8 +24,8 @@ URLS = {
 # File Names
 RAW_100_COMPANIES = "top_100_usa_companies.csv"
 
-ALPHA_VANTAGE_KEY = "your_key_here"
-FRED_API_KEY = "your_key_here"
+ALPHA_VANTAGE_KEY = "YULB85663II1S7N2"
+FRED_API_KEY = "06df40481c0474abfc19e8d455fa87a8"
 
 os.makedirs(RAW_PATH, exist_ok=True)
 os.makedirs(SRC_DIR, exist_ok=True)
