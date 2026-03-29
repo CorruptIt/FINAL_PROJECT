@@ -12,3 +12,12 @@
 ### Scraping Logic
 
 - [Top 100 companies](https://companiesmarketcap.com/usa/largest-companies-in-the-usa-by-market-cap/) Gather view requests library then start filling the database table.
+  - [x] filled companies table with automatic script.
+  - [x] data acquisition for fundamentals and daily prices, yahoo and alpha_vantage-3.
+  - [x] data acquisition for macro data, fredapi.
+
+### Clean data
+
+- Before putting recently acquired data in DB it should be verified and cleaned.
+  - [ ] verify the data.
+  - [ ] clean the data.
