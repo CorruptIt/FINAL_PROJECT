@@ -12,6 +12,7 @@ RAW_PATH = os.path.join(DATA_DIR, "raw")
 DAILY_PATH = os.path.join(RAW_PATH, "daily")
 FUNDAMENTALS_PATH = os.path.join(RAW_PATH, "fundamentals")
 MACRO_PATH = os.path.join(RAW_PATH, "macro")
+CLEANED_PATH = os.path.join(DATA_DIR, "cleaned")
 
 # Urls
 URLS = {

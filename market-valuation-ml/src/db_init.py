@@ -29,7 +29,11 @@ def initialize_db():
             CREATE TABLE IF NOT EXISTS Daily_Prices (
                 ticker TEXT,
                 date TEXT,
+                open REAL,
+                high REAL,
+                low REAL,
                 close REAL,
+                adj_close REAL,
                 volume INTEGER,
                 hl_pct_change REAL,
                 PRIMARY KEY (ticker, date),
@@ -44,6 +48,8 @@ def initialize_db():
                 report_date TEXT,
                 net_income REAL,
                 total_assets REAL,
+                total_liabilities REAL,
+                total_equity REAL,
                 shares_out INTEGER,
                 PRIMARY KEY (ticker, report_date),
                 FOREIGN KEY (ticker) REFERENCES Companies (ticker)
