@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 
 # 5 year calculation for macro data
 end_date = datetime.now()
-start_date = end_date - timedelta(days=5 * 365)
+start_date = datetime(2005, 1, 1)
 
 
 def get_db_connection():
@@ -41,7 +41,7 @@ def get_daily_prices_raw(tickers):
     for ticker in tickers:
         print(f"Getting stock history for {ticker}")
         stock = yf.Ticker(ticker)
-        daily_df = stock.history(period="5y")
+        daily_df = stock.history(start="2005-01-01", auto_adjust=True)
 
         if not daily_df.empty:
             daily_df["ticker"] = ticker
@@ -61,7 +61,7 @@ def get_fundamentals_raw(tickers):
     for ticker in tickers:
         try:
             print(
-                f"I can't believe I paid for this api to get 5y's of quarterly data for {
+                f"I can't believe I paid for this api to get 20y's of quarterly data for {
                     ticker
                 }"
             )
@@ -79,7 +79,7 @@ def get_fundamentals_raw(tickers):
                 merged["ticker"] = ticker
 
                 fund_path = os.path.join(
-                    config.FUNDAMENTALS_PATH, f"{ticker}_5y_fundamentals.csv"
+                    config.FUNDAMENTALS_PATH, f"{ticker}_20y_fundamentals.csv"
                 )
                 merged.to_csv(fund_path)
 
@@ -119,7 +119,7 @@ def get_macro_raw():
             print(f"Error {name} : {e}")
 
     if not macro_df.empty:
-        macro_path = os.path.join(config.MACRO_PATH, "us_macro_5y.csv")
+        macro_path = os.path.join(config.MACRO_PATH, "us_macro_20y.csv")
         macro_df.to_csv(macro_path)
         print(f"Macro data saved to {macro_path}")
 
@@ -128,4 +128,4 @@ if __name__ == "__main__":
     ticker_list = get_tickers_from_db()
     get_daily_prices_raw(ticker_list)
     get_macro_raw()
-    get_fundamentals_raw(ticker_list)
+    # get_fundamentals_raw(ticker_list)

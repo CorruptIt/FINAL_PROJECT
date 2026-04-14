@@ -1,32 +1,17 @@
 import config
 import sqlite3
-import sys
-from pathlib import Path
-
-sys.path.append(str(Path(__file__).resolve().parent.parent))
-
-"""Setting up the data base to the schema explain in the proposal"""
 
 
-def initialize_db():
-    print(f"Connecting DB @: {config.DB_PATH}")
+with sqlite3.connect(config.DB_PATH) as conn:
+    cursor = conn.cursor()
 
-    with sqlite3.connect(config.DB_PATH) as conn:
-        cursor = conn.cursor()
+    cursor.execute("DROP TABLE IF EXISTS Daily_Prices")
+    cursor.execute("DROP TABLE IF EXISTS Fundamentals")
+    cursor.execute("DROP TABLE IF EXISTS Macro")
 
-        # Company table
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS Companies (
-                ticker TEXT PRIMARY KEY,
-                name TEXT,
-                sector TEXT,
-                industry_group TEXT
-            )
-        """)
-
-        # Daily_Prices table
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS Daily_Prices (
+    # Daily_Prices table
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS Daily_Prices (
                 ticker TEXT,
                 date TEXT,
                 open REAL,
@@ -41,8 +26,8 @@ def initialize_db():
             )
         """)
 
-        # Fundamentals table
-        cursor.execute("""
+    # Fundamentals table
+    cursor.execute("""
             CREATE TABLE IF NOT EXISTS Fundamentals (
                 ticker TEXT,
                 report_date TEXT,
@@ -57,8 +42,8 @@ def initialize_db():
             )
         """)
 
-        # Macro table
-        cursor.execute("""
+    # Macro table
+    cursor.execute("""
             CREATE TABLE IF NOT EXISTS Macro (
                 date TEXT PRIMARY KEY,
                 unemployment_rate REAL,
@@ -66,10 +51,4 @@ def initialize_db():
                 fed_rate REAL
             )
         """)
-
-        conn.commit()
-        print("Schema initialize successfully")
-
-
-if __name__ == "__main__":
-    initialize_db()
+    conn.commit()
