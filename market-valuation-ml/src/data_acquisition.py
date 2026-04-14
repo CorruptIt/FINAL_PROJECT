@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 
 # 5 year calculation for macro data
 end_date = datetime.now()
-start_date = datetime(2005, 1, 1)
+start_date = datetime(2004, 1, 1)
 
 
 def get_db_connection():
@@ -126,6 +126,6 @@ def get_macro_raw():
 
 if __name__ == "__main__":
     ticker_list = get_tickers_from_db()
-    get_daily_prices_raw(ticker_list)
+    # get_daily_prices_raw(ticker_list)
     get_macro_raw()
     # get_fundamentals_raw(ticker_list)

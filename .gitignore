@@ -20,3 +20,6 @@ data/market_data.db
 
 # System files
 .DS_Store
+
+#csv files
+.csv

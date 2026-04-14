@@ -117,6 +117,56 @@ def clean_daily():
         return master_daily_df
 
 
+def clean_macro():
+    """
+    func to filter and clean macro data
+    """
+    raw_folder = config.MACRO_PATH
+    cleaned_data = []
+
+    for filename in os.listdir(raw_folder):
+        if filename.endswith(".csv"):
+            file_path = os.path.join(raw_folder, filename)
+            df = pd.read_csv(file_path)
+
+            df = df.rename(columns={df.columns[0]: "date"})
+
+            target_cols = {
+                "date": "date",
+                "unemployment_rate": "unemployment_rate",
+                "cpi_index": "cpi_index",
+                "fed_funds_rate": "fed_rate",
+            }
+
+            df_cleaned = df[list(target_cols.keys())].rename(columns=target_cols)
+
+            df_cleaned["date"] = pd.to_datetime(
+                df_cleaned["date"], utc=True
+            ).dt.strftime("%Y-%m-%d")
+            num_cols = ["unemployment_rate", "cpi_index", "fed_rate"]
+            df_cleaned[num_cols] = df_cleaned[num_cols].apply(
+                pd.to_numeric, errors="coerce"
+            )
+
+            df_cleaned["cpi_yoy"] = df_cleaned["cpi_index"].pct_change(periods=12) * 100
+            df_final = df_cleaned[df_cleaned["date"] >= "2005-01-01"].copy()
+
+            sql_cols = ["date", "unemployment_rate", "cpi_yoy", "fed_rate"]
+
+            df_final = df_final[sql_cols]
+            cleaned_data.append(df_final)
+
+        if cleaned_data:
+            macro_master_df = pd.concat(cleaned_data, ignore_index=True)
+
+            macro_master_df = macro_master_df.sort_values(by="date")
+
+            master_path = os.path.join(config.CLEANED_PATH, "cleaned_macro_master.csv")
+            macro_master_df.to_csv(master_path, index=False)
+            return macro_master_df
+
+
 if __name__ == "__main__":
-    clean_daily()
-    clean_fundamental()
+    # clean_daily()
+    # clean_fundamental()
+    clean_macro()
