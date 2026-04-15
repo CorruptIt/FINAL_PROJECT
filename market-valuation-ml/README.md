@@ -19,5 +19,7 @@
 ### Clean data
 
 - Before putting recently acquired data in DB it should be verified and cleaned.
-  - [ ] verify the data.
-  - [ ] clean the data.
+  - [x] verify the data.
+  - [x] clean the data.
+  - [x] load data into db
+  - [x] create features

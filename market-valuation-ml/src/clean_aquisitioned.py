@@ -166,7 +166,7 @@ def clean_macro():
             return macro_master_df
 
 
-if __name__ == "__main__":
-    # clean_daily()
-    # clean_fundamental()
-    clean_macro()
+# if __name__ == "__main__":
+# clean_daily()
+# clean_fundamental()
+# clean_macro()

@@ -33,5 +33,5 @@ def grab_top_100_companies():
         return None
 
 
-if __name__ == "__main__":
-    grab_top_100_companies()
+# if __name__ == "__main__":
+# grab_top_100_companies()

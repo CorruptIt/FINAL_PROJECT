@@ -109,8 +109,8 @@ def audit_masters():
     conn.close()
 
 
-if __name__ == "__main__":
-    # populate_companies_table(limit=100)
-    # audit_companies()
-    # populate_with_masters()
-    audit_masters()
+# if __name__ == "__main__":
+# populate_companies_table(limit=100)
+# audit_companies()
+# populate_with_masters()
+# audit_masters()

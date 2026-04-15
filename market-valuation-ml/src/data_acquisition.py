@@ -124,8 +124,8 @@ def get_macro_raw():
         print(f"Macro data saved to {macro_path}")
 
 
-if __name__ == "__main__":
-    ticker_list = get_tickers_from_db()
-    # get_daily_prices_raw(ticker_list)
-    get_macro_raw()
-    # get_fundamentals_raw(ticker_list)
+# if __name__ == "__main__":
+# ticker_list = get_tickers_from_db()
+# get_daily_prices_raw(ticker_list)
+# get_macro_raw()
+# get_fundamentals_raw(ticker_list)
