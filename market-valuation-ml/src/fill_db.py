@@ -39,8 +39,7 @@ def populate_companies_table(limit=100):
 
             if index % 10 == 0:
                 conn.commit()
-                print(f"Progress: {index}/{len(raw_df)
-                                           } companies done so far...")
+                print(f"Progress: {index}/{len(raw_df)} companies done so far...")
 
             time.sleep(1.5)
         except Exception as e:
@@ -49,6 +48,26 @@ def populate_companies_table(limit=100):
 
     conn.close()
     print("100 companies processed please verify!")
+
+
+def populate_with_masters():
+    conn = sqlite3.connect(config.DB_PATH)
+
+    files_tables_tup = [
+        ("cleaned_daily_master.csv", "Daily_Prices"),
+        ("cleaned_fundamentals_master.csv", "Fundamentals"),
+        ("cleaned_macro_master.csv", "Macro"),
+    ]
+
+    for fname, table in files_tables_tup:
+        path = os.path.join(config.CLEANED_PATH, fname)
+
+        if os.path.exists(path):
+            df = pd.read_csv(path)
+            df.to_sql(table, conn, if_exists="replace", index=False, chunksize=10000)
+        else:
+            print("Something went wrong")
+    conn.close()
 
 
 def audit_companies():
@@ -66,8 +85,7 @@ def audit_companies():
     missing_data_df = pd.read_sql(query, conn)
     print("\n ###AUDIT OF COMPANY TABLE###")
     if not missing_data_df.empty:
-        print(f"Found {len(missing_data_df)
-                       } missing records from company table")
+        print(f"Found {len(missing_data_df)} missing records from company table")
         print(missing_data_df)
     else:
         print("No missing data! Knock on wood")
@@ -75,6 +93,24 @@ def audit_companies():
     conn.close()
 
 
+def audit_masters():
+    conn = sqlite3.connect(config.DB_PATH)
+
+    tables = ["Daily_Prices", "Macro", "Fundamentals"]
+
+    for table in tables:
+        print(f"Top 5 rows of {table}")
+        query = f"SELECT * FROM {table} LIMIT 5"
+        df = pd.read_sql(query, conn)
+        print(df)
+
+        count = pd.read_sql(f"SELECT COUNT(*) as total FROM {table}", conn)
+        print(f"Total rows in {table}: {count['total'][0]}")
+    conn.close()
+
+
 if __name__ == "__main__":
-    populate_companies_table(limit=100)
-    audit_companies()
+    # populate_companies_table(limit=100)
+    # audit_companies()
+    # populate_with_masters()
+    audit_masters()
