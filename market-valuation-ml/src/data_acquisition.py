@@ -8,7 +8,7 @@ import pandas as pd
 import time
 from datetime import datetime, timedelta
 
-# 5 year calculation for macro data
+# 20 year calculation for macro data
 end_date = datetime.now()
 start_date = datetime(2004, 1, 1)
 
@@ -35,7 +35,7 @@ def get_tickers_from_db():
 def get_daily_prices_raw(tickers):
     """
     utilizing yahoo finance get all
-    daily price data from the past 5 years for
+    daily price data from the past 20 years for
     each ticker
     """
     for ticker in tickers:
@@ -72,6 +72,7 @@ def get_fundamentals_raw(tickers):
 
             balance_df, _ = fd.get_balance_sheet_quarterly(symbol=ticker)
 
+            # Join everything
             if not income_df.empty and not balance_df.empty:
                 merged = income_df.join(
                     balance_df, how="outer", lsuffix="_inc", rsuffix="_bs"

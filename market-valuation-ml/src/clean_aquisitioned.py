@@ -17,6 +17,7 @@ def clean_fundamental():
             file_path = os.path.join(raw_folder, filename)
             df = pd.read_csv(file_path)
 
+            # columns that we specifically need
             target_cols = {
                 "fiscalDateEnding_inc": "report_date",
                 "netIncome": "net_income",
@@ -27,8 +28,10 @@ def clean_fundamental():
                 "ticker": "ticker",
             }
 
+            # rename for easy sql transition
             df_filtered = df[list(target_cols.keys())].rename(columns=target_cols)
 
+            # we want numeric columns to make sure they are the right type
             numeric_cols = [
                 "net_income",
                 "total_assets",
@@ -42,6 +45,7 @@ def clean_fundamental():
                     df_filtered[col].replace("None", np.nan)
                 )
 
+            # This will be the date we use for ml so model doesn't look ahead
             df_filtered["effective_date"] = pd.to_datetime(
                 df_filtered["report_date"]
             ) + pd.Timedelta(days=45)
@@ -77,6 +81,7 @@ def clean_daily():
             file_path = os.path.join(raw_folder, filename)
             df = pd.read_csv(file_path)
 
+            # we only want these cols
             target_cols = {
                 "Date": "date",
                 "ticker": "ticker",
@@ -87,6 +92,7 @@ def clean_daily():
                 "Volume": "volume",
             }
 
+            # rename for sql transition
             df_cleaned = df[list(target_cols.keys())].rename(columns=target_cols)
             df_cleaned["adj_close"] = df_cleaned["close"]
             df_cleaned["hl_pct_change"] = (
@@ -97,6 +103,7 @@ def clean_daily():
                 df_cleaned["date"], utc=True
             ).dt.strftime("%Y-%m-%d")
 
+            # clean numeric cols
             num_cols = ["open", "high", "low", "close", "adj_close", "hl_pct_change"]
 
             df_cleaned[num_cols] = df_cleaned[num_cols].apply(
@@ -148,6 +155,7 @@ def clean_macro():
                 pd.to_numeric, errors="coerce"
             )
 
+            # important because we want yoy change
             df_cleaned["cpi_yoy"] = df_cleaned["cpi_index"].pct_change(periods=12) * 100
             df_final = df_cleaned[df_cleaned["date"] >= "2005-01-01"].copy()
 

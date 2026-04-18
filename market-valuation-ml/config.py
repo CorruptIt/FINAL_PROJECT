@@ -5,6 +5,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 SRC_DIR = os.path.join(BASE_DIR, "src")
+MODELS_DIR = os.path.join(BASE_DIR, "models")
 
 # Paths
 DB_PATH = os.path.join(DATA_DIR, "market_data.db")

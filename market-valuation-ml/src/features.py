@@ -49,6 +49,7 @@ def create_training_set():
     possible_NaN_cols = [
         "net_income",
         "total_equity",
+        "total_assets",
         "shares_out",
         "unemployment_rate",
         "cpi_yoy",
@@ -60,6 +61,16 @@ def create_training_set():
 
     df["pe_ratio"] = df["market_cap"] / df["net_income"].replace(0, np.nan)
     df["pb_ratio"] = df["market_cap"] / df["total_equity"].replace(0, np.nan)
+    df["debt_to_equity"] = (df["total_assets"] - df["total_equity"]) / df[
+        "total_equity"
+    ].replace(0, np.nan)
+    df["roe"] = df["net_income"] / df["total_equity"].replace(0, np.nan)
+
+    # simple moving average
+    df["sma_50"] = df.groupby("ticker")["close"].transform(
+        lambda x: x.rolling(window=50).mean()
+    )
+    df["dist_from_sma50"] = (df["close"] - df["sma_50"]) / df["sma_50"]
 
     # shift 30 days prior so our model can predict
     df["target_market_cap"] = df.groupby("ticker")["market_cap"].shift(-30)
