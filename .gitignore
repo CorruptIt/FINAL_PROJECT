@@ -22,4 +22,4 @@ data/market_data.db
 .DS_Store
 
 #csv files
-.csv
+*.csv
