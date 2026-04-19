@@ -1,4 +1,5 @@
 import os
+from dotenv import load_dotenv
 
 """This is the config file for file paths that way it runs independent of the environment"""
 # DIR Structure
@@ -26,8 +27,9 @@ URLS = {
 # File Names
 RAW_100_COMPANIES = "top_100_usa_companies.csv"
 
-ALPHA_VANTAGE_KEY = "YULB85663II1S7N2"
-FRED_API_KEY = "06df40481c0474abfc19e8d455fa87a8"
+load_dotenv()
+ALPHA_VANTAGE_KEY = os.getenv("ALPHA_VANTAGE_KEY")
+FRED_API_KEY = os.getenv("FRED_API_KEY")
 
 os.makedirs(RAW_PATH, exist_ok=True)
 os.makedirs(SRC_DIR, exist_ok=True)
