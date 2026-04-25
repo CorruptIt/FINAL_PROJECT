@@ -11,13 +11,21 @@ def train_gbm():
     path = os.path.join(config.CLEANED_PATH, "training_set.csv")
     df = pd.read_csv(path)
 
+    # drop columns that are not numeric and ones that prevent bias
     drop_cols = [
         "date",
         "ticker",
         "target_market_cap",
         "log_target_market_cap",
+        "market_cap",
+        "log_market_cap",
         "effective_date",
         "report_date",
+        "open",
+        "high",
+        "low",
+        "close",
+        "adj_close",
     ]
 
     X = df.drop(columns=drop_cols)
