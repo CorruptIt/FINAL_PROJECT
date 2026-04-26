@@ -26,7 +26,9 @@ def create_training_set():
     macro["date"] = pd.to_datetime(macro["date"])
 
     daily_prices = daily_prices.sort_values(by="date")
-    fundamentals = fundamentals.sort_values(by="effective_date")
+    fundamentals = fundamentals.sort_values(by="effective_date").dropna(
+        subset=["effective_date"]
+    )
     macro = macro.sort_values(by="date")
 
     # time series aware join daily_prices and fundamentals focusing on tickers
