@@ -20,7 +20,7 @@ def grab_top_100_companies():
         response = requests.get(url, headers=headers, timeout=10)
         response.raise_for_status()
 
-        os.makedirs(config.RAW_PATH, exists_ok=True)
+        os.makedirs(config.RAW_PATH, exist_ok=True)
 
         with open(SAVE_PATH, "wb") as f:
             f.write(response.content)
