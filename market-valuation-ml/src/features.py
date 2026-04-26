@@ -13,14 +13,16 @@ def create_training_set():
     """
     conn = sqlite3.connect(config.DB_PATH)
 
-    daily_prices = pd.read_sql("SELECT * FROM Daily_Prices ORDER BY date", conn)
+    daily_prices = pd.read_sql(
+        "SELECT * FROM Daily_Prices ORDER BY date", conn)
     fundamentals = pd.read_sql(
         "SELECT * FROM Fundamentals ORDER BY effective_date", conn
     )
     macro = pd.read_sql("SELECT * FROM Macro ORDER BY date", conn)
 
     daily_prices["date"] = pd.to_datetime(daily_prices["date"])
-    fundamentals["effective_date"] = pd.to_datetime(fundamentals["effective_date"])
+    fundamentals["effective_date"] = pd.to_datetime(
+        fundamentals["effective_date"])
     macro["date"] = pd.to_datetime(macro["date"])
 
     daily_prices = daily_prices.sort_values(by="date")
@@ -88,9 +90,10 @@ def create_training_set():
     path = os.path.join(config.CLEANED_PATH, "training_set.csv")
     df.to_csv(path, index=False)
 
-    print(f"training_set rows : {df.shape[0]}\n training_set cols : {df.shape[1]}")
+    print(f"training_set rows : {
+          df.shape[0]}\n training_set cols : {df.shape[1]}")
     print(df[["log_market_cap", "log_target_market_cap"]].corr())
 
 
-if __name__ == "__main__":
-    create_training_set()
+# if __name__ == "__main__":
+#   create_training_set()
