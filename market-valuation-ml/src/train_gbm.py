@@ -55,6 +55,27 @@ def train_gbm():
     print(f"MAE : ${mae:,.2f}")
     model_path = os.path.join(config.MODELS_DIR, "xg_model.json")
     model.save_model(model_path)
+
+    # save results for further analyzation
+    model_results = df.iloc[split:][[
+        "ticker", "date", "log_target_market_cap"]].copy()
+    model_results["actual_market_cap"] = np.expm1(
+        model_results["log_target_market_cap"]
+    )
+    model_results["predicted_market_cap"] = np.expm1(preds)
+
+    model_results["absolute_error"] = abs(
+        model_results["actual_market_cap"] -
+        model_results["predicted_market_cap"]
+    )
+    model_results["percent_error"] = (
+        model_results["absolute_error"] / model_results["actual_market_cap"]
+    ) * 100
+
+    model_results_path = os.path.join(
+        config.CLEANED_PATH, "xgb_test_results.csv")
+    model_results.to_csv(model_results_path, index=False)
+
     return model
 
 
